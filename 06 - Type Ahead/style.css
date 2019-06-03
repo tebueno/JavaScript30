@@ -65,6 +65,11 @@ input.search {
   background: linear-gradient(to top,  #ffffff 0%,#EFEFEF 100%);
 }
 
+.suggestions li.active {
+  transition: all .2s;
+  background: lightblue;
+}
+
 span.population {
   font-size: 15px;
 }

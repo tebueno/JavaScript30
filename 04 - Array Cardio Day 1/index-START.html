@@ -6,6 +6,7 @@
 </head>
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+  <ul id="results"></ul>
   <script>
     // Get your shorts on - this is an array workout!
     // ## Array Cardio Day 1
@@ -27,32 +28,87 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 
+    const addData = (data) => {
+      let html = data.reduce((a, b) => {
+        return a + b;
+      });
+
+      document.querySelector("#results").innerHTML = html;
+    }
+
     const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+    let filtered = inventors
+                  .filter(record => (record.year >= 1500 || record.year <= 1600))
+                  .map(value => `${value.first} ${value.last}`);
+    // addData(filtered);
     // Array.prototype.map()
+
     // 2. Give us an array of the inventors' first and last names
+    let names = inventors.map(record => `<li>${record.first} ${record.last}</li>`);
+    // addData(names);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    let birthdays = inventors
+                    .sort((a, b) => {
+                      let comparison = 0; 
+                      comparison = (a.year < b.year) ? 1 : -1;
+                      return comparison;
+                    })
+                    .map(record => {
+                      return `<li>${record.first} ${record.last} birthday: ${record.year}</li>`;
+                    });
+    // addData(birthdays);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    let lifeSpan = inventors.reduce((a, b) => {
+      let currentVal = a.passed - a.year || a;
+      return currentVal + (b.passed - b.year);
+    });
+    // console.log(lifeSpan);
 
     // 5. Sort the inventors by years lived
+    let yearsLived = inventors
+                     .sort((a, b) => {
+                       let currVal = a.passed - a.year;
+                       let nextVal = b.passed - b.year;
+                       let comparison = 0;
+                       comparison = (currVal < nextVal) ? 1 : -1;
+                       return comparison
+                     }).map(record => {
+                      return `<li>${record.first} ${record.last} years Lived: ${record.passed - record.year}</li>`;
+                    });
+    // addData(yearsLived);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
-
+    let street = 'Boulevard de Clichy';
+    //console.log(street.match(/de/ig) !== null);
+    
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let sortedPeople = people
+                       .sort((a, b) => {
+                         let comparison = 0;
+                         comarison = (a.split(',')[0] > b.split(',')[0]) ? -1 : 1;
+                         return comparison;
+                       }).map(record => {
+                      return `<li>${record}</li>`;
+                    });
+    // addData(sortedPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    let sumCarType = data.reduce((obj, nextVal) => {
+                        obj[nextVal] = obj[nextVal] + 1 || 1;
+                        return obj;
+                    }, {});
+    console.table(sumCarType);
 
   </script>
 </body>

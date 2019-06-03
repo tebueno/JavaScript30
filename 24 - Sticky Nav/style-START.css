@@ -46,7 +46,7 @@ nav {
   top: 0;
   width: 100%;
   transition: all 0.5s;
-  position: relative;
+  position: sticky;
   z-index: 1;
 }
 
@@ -74,7 +74,11 @@ li.logo {
   font-size: 30px;
 }
 
-li.logo a {
+li.active {
+  max-width: 500px;
+}
+
+li.logo, li.active a {
   color: black;
 }
 

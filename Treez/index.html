@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <body>
+        <h1>Hello TREEZ</h1>
+        <ul id="treez"></ul>
+    </body>
+</head>
+<script>
+    fetch('https://api.treez.io/v1.0/dispensary/goe/menu/product_list?type=all&offset=0&limit=600')
+        .then(resp => {
+            return resp.json();
+        }).then(resp => {
+            let products = resp.product_list;
+            const na = 'na';
+            console.log(products);
+            let display = products.reduce((output, product) => {
+                return output + `<li>
+                    <span>${product.product_name || na}</span>
+                    <span>${product.type || na}</span>
+                    <span>${product.attributes.thc_percentage || na}</span>
+                    <img src="${product.images.cropped_image}">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </li>`
+            }, '');
+
+            document.querySelector('#treez').innerHTML = display;
+        })
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <script type="text/javascript" src="./movements.js"></script>
+</head>
+<body>
+
+  <h1>Movement Data</h1>
+  <ul id='someId'></ul>
+  
+<script>
+   let data = movements;
+   let deDuped = [data[0]]
+
+
+   for(let i = 0; i < data.length; i++) {
+       let j = 0;
+
+       while(j < deDuped.length) {
+           if(deDuped[j].id === data[i].id) { break }
+           j++;
+       }
+       if (j === deDuped.length) { deDuped.push(data[i])}
+
+   }
+
+   document.querySelector('#someId').innerHTML = deDuped.reduce((string, elm) => string + `<li>${elm.label}</li>`,'');
+   console.table(data.length);
+   console.table(deDuped.length);
+
+</script>
+</body>
+</html>

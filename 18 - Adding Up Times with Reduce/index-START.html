@@ -182,6 +182,38 @@
     </li>
   </ul>
 <script>
+  let timeData = [...document.querySelectorAll('li')].map(listItem => {
+    const mins = parseInt(listItem.getAttribute('data-time').split(':')[0]) || 0;
+    const secs = parseInt(listItem.getAttribute('data-time').split(':')[1]) || 0;
+    return [mins, secs];
+  });
+  let timeObj =  {
+    hour: 0,
+    min: 0,
+    sec: 0,
+  };
+  let sumTime = timeData.reduce((obj, val) => {
+    let secs = val[1] + obj.sec;
+    let mins = val[0] + obj.min;
+
+    if (secs >= 60) {
+      mins++;
+      secs -=60;
+    } 
+
+    if (mins >= 60) {
+      obj.hour++;
+      mins -=60;
+    }
+
+    obj.min = mins;
+    obj.sec = secs;
+
+    return obj
+
+  }, timeObj);
+
+  console.log(...Object.values(sumTime));
 </script>
 </body>
 </html>

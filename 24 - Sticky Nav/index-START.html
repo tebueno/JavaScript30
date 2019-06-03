@@ -54,6 +54,20 @@
   </div>
 
 <script>
+const windowHeight = window.innerHeight;
+const topNav = document.querySelector('#main').getBoundingClientRect().top;
+
+window.addEventListener('scroll', () => {
+  const topNav = document.querySelector('#main').getBoundingClientRect().top;
+  console.log(topNav);
+  if (topNav === 0) {
+    //document.querySelector('li').classList.remove('logo');
+    document.querySelector('li').classList.add('active');
+  } else {
+    document.querySelector('li').classList.remove('active');
+    //document.querySelector('li').classList.add('logo');
+  }
+});
 
 </script>
 

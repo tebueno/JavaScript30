@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
-</head>
+</head>  
 <body>
 
   <style>
@@ -48,6 +48,21 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const sortedBands = bands.sort((a, b) => {
+    let comparison = 0;
+    a = a.toLowerCase().replace(/^the\s|a\s|an\s/,'');
+    b = b.toLowerCase().replace(/^the\s|a\s|an\s/,'');
+
+    comparison = (a < b) ? -1 : 1;
+    return comparison;
+    
+});
+
+let listItems = sortedBands.reduce((output, band) => {
+  return output + `<li>${band}</li>`;
+}, '');
+
+document.querySelector('#bands').innerHTML = listItems;
 
 </script>
 

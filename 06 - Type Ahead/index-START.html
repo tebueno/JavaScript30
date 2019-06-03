@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form class="search-form">
+      <input type="text" class="search" placeholder="City or State" />
+      <ul class="suggestions">
+        <li>Filter for a city</li>
+        <li>or a state</li>
+      </ul>
+    </form>
+    <script>
+      const endpoint =
+        "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+      let cities = [];
+      fetch(endpoint)
+        .then(response => {
+          return response.json();
+        })
+        .then(parsed => {
+          cities = parsed;
+        });
 
-  <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
-    <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
-    </ul>
-  </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+      const loadRecords = () => {
+        const input = document.querySelector("input").value;
 
-</script>
-</body>
+        const html = cities
+          .filter(record => {
+            const city = record.city.toLowerCase();
+            const state = record.state.toLowerCase();
+            return city.includes(input) || state.includes(input);
+          })
+          .reduce((string, nextRecord) => {
+            const hlCity = nextRecord.city.replace(input,`<span class="hl">${input}</span>`);
+            const hlState = nextRecord.state.replace(input,`<span class="hl">${input}</span>`);
+            return string + `<li>
+              <span class="name">${hlCity}, ${hlState}</span> 
+              <span>${nextRecord.population}</span>
+              </li>`;
+          }, "");
+
+        document.querySelector('.suggestions').innerHTML = html;
+        i = -1;
+      };
+
+      let inputElm = document.querySelector("input");
+      let i = -1;
+      inputElm.addEventListener("input", loadRecords);
+      inputElm.addEventListener('keydown', (e) => {
+         let suggestions = document.querySelectorAll('.suggestions > li');
+
+         if (e.keyCode === 38 && suggestions.length > 0 && i > 0) { 
+          if (document.querySelector('.active')) {document.querySelector('.active').classList.remove('active'); }
+           suggestions[--i].classList.add('active');
+           document.querySelector('input').value = suggestions[i].innerText;
+          }
+         if (e.keyCode === 40 && suggestions.length > 0 && i < suggestions.length - 1) { 
+           if (document.querySelector('.active')) {document.querySelector('.active').classList.remove('active'); }
+           suggestions[++i].classList.add('active');
+           document.querySelector('input').value = suggestions[i].innerText;
+          }
+          if (e.keyCode === 13) { 
+            document.querySelector('input').value = suggestions[i].innerText; 
+          }
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+    <div id="metrics"></div>
+  <div class="site-wrap">
+
+    <img src="http://unsplash.it/400/400" class="show">   
+    <img src="http://unsplash.it/400/401" class="hide">
+    <img src="http://unsplash.it/200/500" class="hide">
+    <img src="http://unsplash.it/400/400" class="hide">
+  </div>
+
+  <script>
+
+  let images = document.querySelectorAll('img');
+  let index = 0;
+  const numImages = images.length;
+
+  // setInterval(rotate, 3000);
+
+  function rotate() { 
+      index++;
+      if (index >= numImages) { 
+          index = 0; 
+      } else {
+        
+          images[index - 1].className = 'hide';
+          images[index].className = 'show';
+      }
+
+
+   }
+
+  </script>
+
+  <style>
+    html {
+      box-sizing: border-box;
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+    }
+
+    #metrics {
+      position: fixed;
+      top: 0px;
+    }
+    
+    .site-wrap {
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        height: 40vh;
+        width: 40vw;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .hide {
+        position: absolute;
+        transition: all 2.5s linear;
+        left: 500px;
+        
+    }
+
+    .show {
+        position: absolute;
+        transition: all 2.5s linear;
+        left: 0px;
+    }
+    
+    
+
+  </style>
+
+</body>
+</html>

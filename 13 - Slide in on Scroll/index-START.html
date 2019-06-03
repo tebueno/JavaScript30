@@ -5,7 +5,7 @@
   <title>Document</title>
 </head>
 <body>
-
+    <div id="metrics"></div>
   <div class="site-wrap">
 
     <h1>Slide in on Scroll</h1>
@@ -58,6 +58,26 @@
       };
     }
 
+    window.addEventListener('scroll', () =>  {
+      let imageElms = [...document.querySelectorAll('img')];
+      // let imgHightArry = imageElms.map(img => img.getBoundingClientRect().bottom);
+      let bottomPage =  window.innerHeight;
+      imageElms.forEach(img => {
+          const bottom = img.getBoundingClientRect().bottom;
+          const top = img.getBoundingClientRect().top + img.height;
+          if (bottom <= bottomPage && top >= 0) {
+            img.classList.add('active');
+          } else {
+            img.classList.remove('active');
+          }
+      });
+      
+      // document.querySelector('#metrics').innerHTML = `Scroll Location: ${bottomPage}, image location: ${imgHightArry}, seen: ${imgsDisplayed}`;
+      //if (imageHeight <= window.innerHeight) {}
+
+      
+    });
+
   </script>
 
   <style>
@@ -67,6 +87,11 @@
       font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
+    }
+
+    #metrics {
+      position: fixed;
+      top: 0px;
     }
     
     body {

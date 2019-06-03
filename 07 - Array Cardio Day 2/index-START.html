@@ -6,6 +6,7 @@
 </head>
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+  <ul id="results"></ul>
   <script>
     // ## Array Cardio Day 2
 
@@ -27,10 +28,30 @@
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
     // Array.prototype.every() // is everyone 19 or older?
+    let age = people.reduce((string, record) => {
+       let today = new Date();
+       const year = +today.getFullYear();
+       const age = year - record.year;
+       return string + `<li>${record.name} is ${age} years old</li>`;
+    }, '');
+
+    const isOld = people.every(record => {
+      let today = new Date();
+      const year = +today.getFullYear();
+      return (year - record.year) >= 19;
+    });
+
+    age += `<li>is anyone older than 19?? ${isOld}</li>`;
+
+    //document.querySelector('#results').innerHTML = age;
+
 
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
+
+    let searchResult = comments.find(record => record.id === 823423);
+    document.querySelector('#results').innerHTML = `<li>is anyone older than 19?? ${JSON.stringify(searchResult)}</li>`;
 
     // Array.prototype.findIndex()
     // Find the comment with this ID

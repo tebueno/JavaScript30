@@ -9,22 +9,23 @@
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px" >
 
     <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px" onmousemove="blurr()">
 
     <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600">
+    <input id="base" type="color" name="base" value="#ffc600" onchange="base()" >
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img class='blur' src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
-
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    :root {
+    --blur: 8px;
+    --base-color: #ffc600;
+    --spacing: 8px;
+    } 
 
     body {
       text-align: center;
@@ -39,12 +40,29 @@
       margin-bottom: 50px;
     }
 
+    img {
+      filter: blur(var(--blur));
+      padding: var(--spacing);
+      background-color: var(--base-color);
+    }
     input {
       width: 100px;
     }
   </style>
 
   <script>
+
+    function blurr() {
+      const blurValue = document.querySelector('#blur').value;
+      document.documentElement.style.setProperty('--blur', `${blurValue}px`);
+    }
+
+    function base() {
+      const colorValue = document.querySelector('#base').value;
+      document.documentElement.style.setProperty('--base-color', `${colorValue}`);
+    }
+
+
   </script>
 
 </body>

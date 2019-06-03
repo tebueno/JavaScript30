@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script src="./index.js"></script>
   <title>JS + CSS Clock</title>
 </head>
 <body>
@@ -9,7 +10,9 @@
 
     <div class="clock">
       <div class="clock-face">
+          <div class="clock-face-hour">
         <div class="hand hour-hand"></div>
+          </div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
       </div>
@@ -56,12 +59,29 @@
       transform: translateY(-3px); /* account for the height of the clock hands */
     }
 
+    .clock-face-hour {
+      position: relative;
+      width: 80%;
+      height: 100%;
+      transform: translateX(30px); /* account for the height of the clock hands */
+    }
+
     .hand {
       width: 50%;
       height: 6px;
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: right;
+    }
+
+    .min-hand {
+      height: 5px;
+    }
+
+
+    .second-hand {
+      height: 2px;
     }
 
   </style>

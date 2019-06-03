@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="https://unpkg.com/react@16.3.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.2/umd/react-dom.production.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+      charset="utf-8"
+    ></script>
+    <script type="text/babel">
+      const Product = props => {
+        const plus = () => {
+          props.voteHandler('up', props.index);
+        };
+        const minus = () => {
+          props.voteHandler('down', props.index);
+        };
+        return (
+          <li>
+            <span>{props.name}</span> - <span>votes: {props.votes}</span>
+            <button onClick={plus}>+</button>{" "}
+            <button onClick={minus}>-</button>
+          </li>
+        );
+      };
+
+      class GroceryApp extends React.Component {
+
+        constructor() {
+          super();
+          this.state = {
+            products: [],
+         }
+        }
+
+        componentDidMount() {
+          this.setState({ products: this.props.products });
+        }
+
+        onVote = (dir, index) => {
+          console.log(this.props.products[index]);
+          (dir === 'up') ? ++this.props.products[index].votes : --this.props.products[index].votes;
+          this.setState({
+            products: this.props.products,
+          })
+        };
+
+        render() {
+          const { products } = this.state;
+
+          return (
+            <ul>
+              {
+                products.map((product, index) => <Product index={index.toString()} {...product} voteHandler={this.onVote} />)
+              }
+            </ul>
+          )
+        }
+      }
+
+
+      ReactDOM.render(<GroceryApp
+        products={[
+          { name: "Oranges", votes: 0 },
+          { name: "Apples", votes: 0 },
+          { name: "Bananas", votes: 0 }
+        ]}
+      />, document.getElementById('root'))
+    </script>
+    <div id="root"></div>
+  </body>
+</html>

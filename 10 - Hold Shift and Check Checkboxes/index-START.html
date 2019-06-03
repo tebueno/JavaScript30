@@ -52,13 +52,15 @@
   </style>
    <!--
    The following is a common layout you would see in an email client.
-
+   
    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
-
+   
   -->
+
+  
   <div class="inbox">
     <div class="item">
-      <input type="checkbox">
+      <input type="checkbox" >
       <p>This is an inbox layout.</p>
     </div>
     <div class="item">
@@ -96,6 +98,25 @@
   </div>
 
 <script>
+ let checkBoxElms = [...document.querySelectorAll('input')];
+ let lastClickedIndex = checkBoxElms.length - 1;
+ checkBoxElms.forEach(elm => {
+    elm.addEventListener('click', (event) => {
+
+      if (event.shiftKey) {
+        const end = Math.max(checkBoxElms.indexOf(event.target), lastClickedIndex);
+        const start = Math.min(checkBoxElms.indexOf(event.target), lastClickedIndex);
+        checkBoxElms.slice(start, end + 1).forEach(val => val.checked = true);
+        console.log(`start: ${start} end: ${end}`);
+      } 
+
+      if (event.target.checked) {
+        lastClickedIndex = checkBoxElms.indexOf(event.target);
+      }
+      
+    });
+ })
+
 </script>
 </body>
 </html>
